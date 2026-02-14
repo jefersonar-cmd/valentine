@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jornada do Amor Eterno</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Great+Vibes&display=swap"
+        rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cormorant Garamond', serif;
+            background: linear-gradient(135deg, #ffeef8 0%, #ffe4e9 25%, #ffd6e0 50%, #ffe4e9 75%, #ffeef8 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+            color: #5a1a3a;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        @keyframes gradientShift {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        .container-main {
+            position: relative;
+            z-index: 2;
+            padding: 40px 20px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        /* Header Romântico */
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.85);
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(194, 24, 91, 0.2);
+            backdrop-filter: blur(10px);
+        }
+
+        h1 {
+            font-family: 'Great Vibes', cursive;
+            font-size: 3.5rem;
+            color: #c2185b;
+            text-shadow: 2px 2px 4px rgba(194, 24, 91, 0.3);
+            margin-bottom: 20px;
+            line-height: 1.3;
+        }
+
+        .verse-header {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-size: 1.3rem;
+            color: #8b2e5a;
+            margin-top: 15px;
+            padding: 15px;
+            border-left: 4px solid #e91e63;
+            background: rgba(233, 30, 99, 0.1);
+            border-radius: 5px;
+        }
+
+        /* Quiz Container */
+        #quiz {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 15px 50px rgba(194, 24, 91, 0.25);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(233, 30, 99, 0.2);
+        }
+
+        .question {
+            margin-bottom: 30px;
+        }
+
+        .question h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            color: #c2185b;
+            margin-bottom: 20px;
+            line-height: 1.5;
+            font-weight: 700;
+        }
+
+        .verse-context {
+            font-style: italic;
+            color: #8b2e5a;
+            margin: 15px 0;
+            padding: 15px;
+            background: linear-gradient(to right, rgba(233, 30, 99, 0.1), transparent);
+            border-left: 3px solid #e91e63;
+            border-radius: 5px;
+            font-size: 1.1rem;
+        }
+
+        /* Opções de resposta */
+        .options {
+            margin: 25px 0;
+        }
+
+        /* --- ESTILO PADRÃO (CELULARES) --- */
+        .options label {
+            display: flex;
+            align-items: center;
+            margin: 15px 0;
+            /* No celular, damos menos espaço na esquerda (45px) */
+            padding: 15px 20px 15px 45px;
+            font-size: 1.1rem;
+            /* Fonte levemente menor no mobile */
+            cursor: pointer;
+            background: linear-gradient(to right, rgba(255, 255, 255, 0.8), rgba(255, 240, 245, 0.8));
+            border: 2px solid rgba(233, 30, 99, 0.3);
+            border-radius: 15px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .options label::before {
+            content: '❤';
+            position: absolute;
+            /* Começa escondido fora da tela */
+            left: -30px;
+            top: 55%;
+            transform: translateY(-55%);
+            font-size: 1.4rem;
+            /* Coração levemente menor no mobile */
+            color: #e91e63;
+            transition: left 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s ease;
+            opacity: 0;
+        }
+
+        /* Animação no Mobile (fica mais pertinho da borda: 10px) */
+        .options label:hover::before {
+            left: 18px;
+            opacity: 1;
+        }
+
+        .options input[type="radio"] {
+            margin-right: 10px;
+            width: 18px;
+            height: 18px;
+            flex-shrink: 0;
+            accent-color: #e91e63;
+        }
+
+        /* --- AJUSTES PARA COMPUTADOR/TABLET (Telas maiores que 768px) --- */
+        @media (min-width: 768px) {
+            .options label {
+                /* No PC, aumentamos o espaço para comportar o coração mais longe */
+                padding: 20px 25px 20px 90px;
+                font-size: 1.3rem;
+            }
+
+            .options label::before {
+                font-size: 1.8rem;
+                /* Coração maior no PC */
+            }
+
+            /* Aqui está o seu ajuste de 57px, que só será aplicado no PC */
+            .options label:hover::before {
+                left: 86px;
+            }
+
+            .options input[type="radio"] {
+                margin-right: 15px;
+                width: 20px;
+                height: 20px;
+            }
+        }
+
+        /* Botão */
+        button {
+            background: linear-gradient(135deg, #e91e63 0%, #c2185b 100%);
+            border: none;
+            color: white;
+            padding: 15px 40px;
+            font-size: 1.3rem;
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            box-shadow: 0 8px 25px rgba(233, 30, 99, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Estado desabilitado do botão */
+        button:disabled,
+        button.disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none !important;
+            box-shadow: none;
+            opacity: 0.7;
+        }
+
+        button::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        button:not(:disabled):hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        button:not(:disabled):hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(233, 30, 99, 0.5);
+        }
+
+        /* Mensagens */
+        #error {
+            color: #c2185b;
+            font-size: 1.2rem;
+            font-style: italic;
+            margin-top: 20px;
+            padding: 15px;
+            background: rgba(233, 30, 99, 0.1);
+            border-radius: 10px;
+            border-left: 4px solid #e91e63;
+            display: none;
+        }
+
+        #result {
+            font-size: 1.6rem;
+            margin-top: 30px;
+            color: #c2185b;
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+        }
+
+        /* Declaração Final */
+        #declaration {
+            margin-top: 40px;
+            padding: 40px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 240, 245, 0.95) 100%);
+            border-radius: 20px;
+            box-shadow: 0 15px 50px rgba(194, 24, 91, 0.3);
+            border: 3px solid rgba(233, 30, 99, 0.3);
+            display: none;
+            animation: fadeInUp 1s ease;
+        }
+
+        #declaration h2 {
+            font-family: 'Great Vibes', cursive;
+            font-size: 3rem;
+            color: #c2185b;
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 4px rgba(194, 24, 91, 0.2);
+        }
+
+        .declaration-text {
+            font-size: 1.4rem;
+            line-height: 2;
+            color: #5a1a3a;
+            margin: 25px 0;
+            text-align: center;
+        }
+
+        .bible-verse {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-size: 1.3rem;
+            color: #8b2e5a;
+            margin: 20px 0;
+            padding: 20px;
+            background: rgba(233, 30, 99, 0.08);
+            border-left: 4px solid #e91e63;
+            border-radius: 8px;
+            line-height: 1.8;
+        }
+
+        .signature {
+            font-family: 'Great Vibes', cursive;
+            font-size: 2.5rem;
+            color: #c2185b;
+            margin-top: 30px;
+            text-align: right;
+        }
+
+        /* Animação de corações */
+        .hearts-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .heart {
+            position: absolute;
+            font-size: 2rem;
+            color: #ff4081;
+            opacity: 0.7;
+            animation: floatHeart 8s linear infinite;
+        }
+
+        @keyframes floatHeart {
+            0% {
+                transform: translateY(0) rotate(0deg) scale(1);
+                opacity: 0;
+            }
+
+            10% {
+                opacity: 0.7;
+            }
+
+            90% {
+                opacity: 0.7;
+            }
+
+            100% {
+                transform: translateY(-100vh) rotate(360deg) scale(0.5);
+                opacity: 0;
+            }
+        }
+
+        /* Partículas de luz */
+        .light-particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: radial-gradient(circle, rgba(233, 30, 99, 0.8), transparent);
+            border-radius: 50%;
+            animation: sparkle 3s linear infinite;
+        }
+
+        @keyframes sparkle {
+
+            0%,
+            100% {
+                opacity: 0;
+                transform: scale(0);
+            }
+
+            50% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* Decoração de rosas */
+        .rose-decoration {
+            position: absolute;
+            font-size: 3rem;
+            opacity: 0.15;
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .rose-top-left {
+            top: -20px;
+            left: -20px;
+        }
+
+        .rose-top-right {
+            top: -20px;
+            right: -20px;
+        }
+
+        .rose-bottom-left {
+            bottom: -20px;
+            left: -20px;
+        }
+
+        .rose-bottom-right {
+            bottom: -20px;
+            right: -20px;
+        }
+
+        /* Animações personalizadas */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes heartBeat {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            10%,
+            30% {
+                transform: scale(1.05);
+            }
+
+            20%,
+            40% {
+                transform: scale(1);
+            }
+        }
+
+        .progress-indicator {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 30px 0;
+        }
+
+        .progress-dot {
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            background: rgba(233, 30, 99, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .progress-dot.active {
+            background: #e91e63;
+            transform: scale(1.3);
+            box-shadow: 0 0 15px rgba(233, 30, 99, 0.6);
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            .question h2 {
+                font-size: 1.4rem;
+            }
+
+            #quiz {
+                padding: 25px;
+            }
+
+            .options label {
+                font-size: 1.1rem;
+                padding: 15px 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="hearts-container" id="heartsContainer"></div>
+
+    <div class="container-main">
+        <div class="header animate__animated animate__fadeInDown">
+            <h1>💕 Jornada do Amor Eterno 💕</h1>
+            <p style="font-size: 1.3rem; color: #8b2e5a; margin: 15px 0;">
+                Uma celebração do amor divino neste Dia de São Valentim
+            </p>
+            <div class="verse-header">
+                "Porque o amor é forte como a morte... as muitas águas não podem apagar o amor, nem os rios
+                afogá-lo."<br>
+                <strong>— Cântico dos Cânticos 8:6-7</strong>
+            </div>
+        </div>
+
+        <div id="quiz" class="animate__animated animate__zoomIn">
+            <div class="rose-decoration rose-top-left">🌹</div>
+            <div class="rose-decoration rose-top-right">🌹</div>
+            <div class="rose-decoration rose-bottom-left">🌹</div>
+            <div class="rose-decoration rose-bottom-right">🌹</div>
+
+            <div class="progress-indicator">
+                <div class="progress-dot active" id="dot1"></div>
+                <div class="progress-dot" id="dot2"></div>
+                <div class="progress-dot" id="dot3"></div>
+                <div class="progress-dot" id="dot4"></div>
+                <div class="progress-dot" id="dot5"></div>
+            </div>
+
+            <div class="question" id="q1">
+                <h2 class="animate__animated animate__pulse">
+                    Qual capítulo da Bíblia é conhecido como o "Hino ao Amor", que descreve a essência do amor
+                    verdadeiro?
+                </h2>
+                <div class="verse-context">
+                    "O amor é paciente, o amor é bondoso... Agora, pois, permanecem a fé, a esperança e o amor. Porém, o
+                    maior destes é o amor."
+                </div>
+                <div class="options">
+                    <label class="animate__animated animate__fadeInLeft">
+                        <input type="radio" name="q1" value="a"> Romanos 12 - O amor em ação
+                    </label>
+                    <label class="animate__animated animate__fadeInLeft" style="animation-delay: 0.1s">
+                        <input type="radio" name="q1" value="b"> 1 Coríntios 13 - O sublime caminho do amor
+                    </label>
+                    <label class="animate__animated animate__fadeInLeft" style="animation-delay: 0.2s">
+                        <input type="radio" name="q1" value="c"> Efésios 5 - Amor conjugal
+                    </label>
+                </div>
+            </div>
+
+            <div class="question" id="q2" style="display: none;">
+                <h2 class="animate__animated animate__pulse">
+                    No Cântico dos Cânticos, como o amor é descrito em sua intensidade e poder?
+                </h2>
+                <div class="verse-context">
+                    "Põe-me como selo sobre o teu coração... porque o amor é forte como a morte."
+                </div>
+                <div class="options">
+                    <label class="animate__animated animate__fadeInLeft">
+                        <input type="radio" name="q2" value="a"> O amor é paciente e espera
+                    </label>
+                    <label class="animate__animated animate__fadeInLeft" style="animation-delay: 0.1s">
+                        <input type="radio" name="q2" value="b"> O amor é forte como a morte
+                    </label>
+                    <label class="animate__animated animate__fadeInLeft" style="animation-delay: 0.2s">
+                        <input type="radio" name="q2" value="c"> O amor tudo suporta e crê
+                    </label>
+                </div>
+            </div>
+
+            <div class="question" id="q3" style="display: none;">
+                <h2 class="animate__animated animate__pulse">
+                    Qual versículo declara de forma mais direta que "Deus é amor"?
+                </h2>
+                <div class="verse-context">
+                    "Amados, amemos uns aos outros, porque o amor procede de Deus..."
+                </div>
+                <div class="options">
+                    <label class="animate__animated animate__fadeInLeft">
+                        <input type="radio" name="q3" value="a"> 1 João 4:8 - A natureza divina
+                    </label>
+                    <label class="animate__animated animate__fadeInLeft" style="animation-delay: 0.1s">
+                        <input type="radio" name="q3" value="b"> João 3:16 - O amor salvador
+                    </label>
+                    <label class="animate__animated animate__fadeInLeft" style="animation-delay: 0.2s">
+                        <input type="radio" name="q3" value="c"> Provérbios 10:12 - O amor que cobre
+                    </label>
+                </div>
+            </div>
+
+            <div class="question" id="q4" style="display: none;">
+                <h2 class="animate__animated animate__pulse">
+                    Segundo Provérbios 31, como é descrita a mulher virtuosa em seu amor e dedicação?
+                </h2>
+                <div class="verse-context">
+                    "Mulher virtuosa, quem a achará? O seu valor muito excede o de rubis..."
+                </div>
+                <div class="options">
+                    <label class="animate__animated animate__fadeInLeft">
+                        <input type="radio" name="q4" value="a"> Seu esposo confia nela de todo coração
+                    </label>
+                    <label class="animate__animated animate__fadeInLeft" style="animation-delay: 0.1s">
+                        <input type="radio" name="q4" value="b"> Ela é mais bela que todas as mulheres
+                    </label>
+                    <label class="animate__animated animate__fadeInLeft" style="animation-delay: 0.2s">
+                        <input type="radio" name="q4" value="c"> Ela possui muitas riquezas
+                    </label>
+                </div>
+            </div>
+
+            <div class="question" id="q5" style="display: none;">
+                <h2 class="animate__animated animate__pulse">
+                    Qual casal bíblico é conhecido por sua história de amor, fidelidade e devoção através das provações?
+                </h2>
+                <div class="verse-context">
+                    "Aonde quer que fores, irei; onde quer que pousares, ali pousarei..."
+                </div>
+                <div class="options">
+                    <label class="animate__animated animate__fadeInLeft">
+                        <input type="radio" name="q5" value="a"> Adão e Eva - O primeiro amor
+                    </label>
+                    <label class="animate__animated animate__fadeInLeft" style="animation-delay: 0.1s">
+                        <input type="radio" name="q5" value="b"> Boaz e Rute - Amor redentor
+                    </label>
+                    <label class="animate__animated animate__fadeInLeft" style="animation-delay: 0.2s">
+                        <input type="radio" name="q5" value="c"> Isaque e Rebeca - Amor providencial
+                    </label>
+                </div>
+            </div>
+
+            <button id="nextBtn" class="btn" onclick="checkAnswer()">
+                ✨ Continuar a Jornada do Amor ✨
+            </button>
+            <div id="error"></div>
+            <div id="result"></div>
+
+            <div id="declaration">
+                <h2>💕 Declaração Eterna de Amor 💕</h2>
+
+                <div class="declaration-text">
+                    <strong>Minha Amada,</strong>
+                </div>
+
+                <div class="bible-verse">
+                    "Porque Deus amou o mundo de tal maneira que deu o seu Filho unigênito, para que todo aquele que
+                    nele crê não pereça, mas tenha a vida eterna."<br>
+                    <strong>— João 3:16</strong>
+                </div>
+
+                <div class="declaration-text">
+                    Neste dia especial de São Valentim de 2026, meu coração transborda de gratidão ao Senhor por ter
+                    colocado você em minha vida. Assim como está escrito nas Sagradas Escrituras, o amor verdadeiro é um
+                    presente divino que Deus nos concedeu.
+                </div>
+
+                <div class="bible-verse">
+                    "Porque o amor é forte como a morte... as muitas águas não podem apagar o amor, nem os rios
+                    afogá-lo."<br>
+                    <strong>— Cântico dos Cânticos 8:6-7</strong>
+                </div>
+
+                <div class="declaration-text">
+                    Você é minha companheira, minha confidente, meu amor eterno. Você trouxe luz à minha vida e alegria
+                    ao meu coração. Que Deus continue abençoando nosso relacionamento e que possamos sempre caminhar
+                    juntos em fé, esperança e amor.
+                </div>
+
+                <div class="bible-verse">
+                    "Três coisas permanecem: a fé, a esperança e o amor. Porém, a maior destas é o amor."<br>
+                    <strong>— 1 Coríntios 13:13</strong>
+                </div>
+
+                <div class="declaration-text" style="font-size: 1.6rem; margin-top: 30px;">
+                    💕 Te amo hoje e sempre, meu amor! 💕
+                </div>
+
+                <div class="signature">
+                    Com todo meu amor e devoção,<br>
+                    Seu Mozão ❤️
+                </div>
+
+                <div style="text-align: center; margin-top: 40px; font-size: 4rem;">
+                    👨🏽‍❤️‍👩🏻✨💕
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script>
+        const questions = ['q1', 'q2', 'q3', 'q4', 'q5'];
+        let currentQuestion = 0;
+        let isProcessing = false; // Flag de segurança para evitar cliques múltiplos
+
+        // Respostas corretas
+        const answers = {
+            q1: 'b', // 1 Coríntios 13
+            q2: 'b', // O amor é forte como a morte
+            q3: 'a', // 1 João 4:8
+            q4: 'a', // Seu esposo confia nela
+            q5: 'b'  // Boaz e Rute
+        };
+
+        // Mensagens românticas de erro (Tom mais Bíblico/Solene)
+        const errorMessages = [
+            "💔 Amada minha, não é esta a vereda da sabedoria... Busca a resposta no Senhor e tenta novamente!",
+            "🌹 Querida, o caminho estreito requer atenção. Ouve a voz do Espírito e escolhe a resposta correta!",
+            "💕 'O coração do sábio discerne o tempo e o modo'. Medita um pouco mais nas Escrituras e responde outra vez!",
+            "✨ Nem mesmo Salomão acertou em tudo... mas a sabedoria clama! Persevera, ó amada da minha alma!",
+            "💖 Que teu discernimento seja como o de Rute. Sê paciente, reflete na Palavra e tenta novamente!"
+        ];
+
+        // Mensagens de sucesso (Tom de Celebração Bíblica)
+        const successMessages = [
+            "🙌 Glória! Teu coração transborda da sabedoria do Alto!",
+            "✨ Amém! Assim como o amor é o vínculo da perfeição, tua resposta foi perfeita!",
+            "🌹 Aleluia! O Espírito de entendimento repousa sobre ti, meu amor!",
+            "💖 Benção Pura! O amor verdadeiro guiou teus passos para a verdade!",
+            "👨🏽‍❤️‍👩🏻 Lindo é o teu conhecimento! 'Lâmpada para os meus pés é a tua palavra'!"
+        ];
+
+        function updateProgressIndicator() {
+            for (let i = 0; i < 5; i++) {
+                const dot = document.getElementById(`dot${i + 1}`);
+                if (i <= currentQuestion) {
+                    dot.classList.add('active');
+                } else {
+                    dot.classList.remove('active');
+                }
+            }
+        }
+
+        function checkAnswer() {
+            // Se já estiver processando uma resposta, ignora o clique
+            if (isProcessing) return;
+
+            const currentQ = questions[currentQuestion];
+            const selected = document.querySelector(`input[name="${currentQ}"]:checked`);
+
+            if (selected) {
+                // Ativa a trava e desabilita o botão
+                isProcessing = true;
+                const btn = $('#nextBtn');
+                btn.prop('disabled', true).addClass('disabled').html('⏳ Consultando as Escrituras...');
+
+                if (selected.value === answers[currentQ]) {
+                    // Resposta correta
+                    $('#error').hide();
+
+                    // Mostrar mensagem de sucesso temporariamente
+                    const randomSuccess = successMessages[Math.floor(Math.random() * successMessages.length)];
+                    $('#result').html(`<span style="color: #e91e63;">✓ ${randomSuccess}</span>`).show();
+
+                    setTimeout(() => {
+                        $('#result').fadeOut();
+                        document.getElementById(currentQ).style.display = 'none';
+                        currentQuestion++;
+                        updateProgressIndicator();
+
+                        if (currentQuestion < questions.length) {
+                            const nextQ = document.getElementById(questions[currentQuestion]);
+                            nextQ.style.display = 'block';
+                            nextQ.classList.add('animate__animated', 'animate__fadeInRight');
+
+                            // Scroll suave para a próxima pergunta
+                            nextQ.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        } else {
+                            showDeclaration();
+                        }
+
+                        // Libera a trava e o botão para a próxima pergunta (se houver)
+                        isProcessing = false;
+                        if (currentQuestion < questions.length) {
+                            btn.prop('disabled', false).removeClass('disabled').html('✨ Continuar a Jornada do Amor ✨');
+                        }
+                    }, 1500);
+                } else {
+                    // Resposta incorreta
+                    const randomError = errorMessages[Math.floor(Math.random() * errorMessages.length)];
+                    $('#error').html(randomError).show().removeClass('animate__shakeX').addClass('animate__animated animate__shakeX');
+
+                    // Criar efeito de coração partido
+                    createBrokenHearts();
+
+                    // Libera a trava e o botão imediatamente para tentar de novo
+                    isProcessing = false;
+                    btn.prop('disabled', false).removeClass('disabled').html('✨ Tentar Novamente ✨');
+                }
+            } else {
+                $('#error').html('💕 Escolha uma opção, ó alma preciosa! Deixe seu coração guiado pela fé decidir...').show().removeClass('animate__shakeX').addClass('animate__animated animate__shakeX');
+            }
+        }
+
+        function showDeclaration() {
+            document.getElementById('nextBtn').style.display = 'none';
+            $('#result').html('<div class="animate__animated animate__heartBeat" style="font-size: 2rem; color: #e91e63;">🎉 Bendito seja o nosso amor! 🎉</div>').show();
+
+            setTimeout(() => {
+                document.getElementById('declaration').style.display = 'block';
+                document.getElementById('declaration').scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+                // Criar explosão de corações
+                createHeartExplosion();
+
+                // Criar partículas de luz
+                createLightParticles();
+            }, 1000);
+        }
+
+        // Gerar corações flutuantes contínuos
+        function createFloatingHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            const hearts = ['❤️', '💕', '💖', '💗', '💓', '💝'];
+            heart.innerHTML = hearts[Math.floor(Math.random() * hearts.length)];
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.fontSize = (Math.random() * 2 + 1) + 'rem';
+            heart.style.animationDuration = (Math.random() * 5 + 5) + 's';
+            heart.style.animationDelay = Math.random() * 2 + 's';
+
+            document.getElementById('heartsContainer').appendChild(heart);
+
+            setTimeout(() => heart.remove(), 10000);
+        }
+
+        // Corações partidos para resposta errada
+        function createBrokenHearts() {
+            for (let i = 0; i < 5; i++) {
+                setTimeout(() => {
+                    const heart = document.createElement('div');
+                    heart.innerHTML = '💔';
+                    heart.style.position = 'fixed';
+                    heart.style.left = '50%';
+                    heart.style.top = '50%';
+                    heart.style.fontSize = '3rem';
+                    heart.style.zIndex = '1000';
+                    heart.style.pointerEvents = 'none';
+                    heart.style.animation = 'brokenHeartFall 1s ease-out forwards';
+                    document.body.appendChild(heart);
+
+                    setTimeout(() => heart.remove(), 1000);
+                }, i * 100);
+            }
+        }
+
+        // Explosão de corações para vitória
+        function createHeartExplosion() {
+            for (let i = 0; i < 30; i++) {
+                setTimeout(() => {
+                    const heart = document.createElement('div');
+                    const hearts = ['❤️', '💕', '💖', '💗', '💓', '💝', '💘', '✝️'];
+                    heart.innerHTML = hearts[Math.floor(Math.random() * hearts.length)];
+                    heart.style.position = 'fixed';
+                    heart.style.left = '50%';
+                    heart.style.top = '30%';
+                    heart.style.fontSize = (Math.random() * 2 + 2) + 'rem';
+                    heart.style.zIndex = '1000';
+                    heart.style.pointerEvents = 'none';
+
+                    const angle = (Math.random() * 360) * (Math.PI / 180);
+                    const velocity = Math.random() * 300 + 200;
+                    const tx = Math.cos(angle) * velocity;
+                    const ty = Math.sin(angle) * velocity;
+
+                    heart.style.animation = `explode 2s ease-out forwards`;
+                    heart.style.setProperty('--tx', tx + 'px');
+                    heart.style.setProperty('--ty', ty + 'px');
+
+                    document.body.appendChild(heart);
+
+                    setTimeout(() => heart.remove(), 2000);
+                }, i * 50);
+            }
+        }
+
+        // Partículas de luz
+        function createLightParticles() {
+            for (let i = 0; i < 50; i++) {
+                setTimeout(() => {
+                    const particle = document.createElement('div');
+                    particle.classList.add('light-particle');
+                    particle.style.left = Math.random() * 100 + '%';
+                    particle.style.top = Math.random() * 100 + '%';
+                    particle.style.animationDelay = Math.random() * 3 + 's';
+                    document.querySelector('.container-main').appendChild(particle);
+
+                    setTimeout(() => particle.remove(), 3000);
+                }, i * 30);
+            }
+        }
+
+        // CSS dinâmico para animações
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes brokenHeartFall {
+                0% {
+                    transform: translate(-50%, -50%) rotate(0deg) scale(1);
+                    opacity: 1;
+                }
+                100% {
+                    transform: translate(calc(-50% + ${Math.random() * 200 - 100}px), calc(-50% + 300px)) rotate(${Math.random() * 360}deg) scale(0.3);
+                    opacity: 0;
+                }
+            }
+            @keyframes explode {
+                0% {
+                    transform: translate(-50%, -50%) scale(1);
+                    opacity: 1;
+                }
+                100% {
+                    transform: translate(calc(-50% + var(--tx)), calc(-50% + var(--ty))) scale(0.5);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Inicialização
+        document.addEventListener('DOMContentLoaded', () => {
+            updateProgressIndicator();
+
+            // Criar corações flutuantes a cada 2 segundos
+            setInterval(createFloatingHeart, 2000);
+
+            // Criar alguns corações iniciais
+            for (let i = 0; i < 10; i++) {
+                setTimeout(createFloatingHeart, i * 200);
+            }
+        });
+
+        // Adicionar animação ao clicar nas opções
+        document.addEventListener('click', (e) => {
+            if (e.target.type === 'radio') {
+                e.target.parentElement.style.animation = 'none';
+                setTimeout(() => {
+                    e.target.parentElement.style.animation = '';
+                    e.target.parentElement.classList.add('animate__animated', 'animate__pulse');
+                }, 10);
+            }
+        });
+    </script>
+</body>
+
+</html>
